@@ -1,14 +1,14 @@
 local Players = game:GetService("Players")
 
-clonable1 = 1
-clonable2 = 1
-clonable3 = 1
-clonable4 = 1
-clonable5 = 1
+local clonable1 = 1
+local clonable2 = 1
+local clonable3 = 1
+local clonable4 = 1
+local clonable5 = 1
 
 Players.PlayerAdded:Connect(function(player)
   
-  ran = math.random(1, 5)
+  local ran = math.random(1, 5)
   if ran == 1 then
     clonable = clonable1
   end
@@ -28,9 +28,9 @@ Players.PlayerAdded:Connect(function(player)
   function islandMake()
     return "game.ReplicatedStorage.island" .. ran
   end
-  clone islandMake:clone()
-  clone.Parent = game.Workspace
-  clone.Name = name
+  cloneobj = islandMake:clone()
+  cloneobj.Parent = game.Workspace
+  cloneobj.Name = name
   if ran == 1 then
     clonable1 += 1
   end
