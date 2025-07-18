@@ -1,5 +1,4 @@
 local pointpoint = 1
-
 local Players = game:GetService("Players")
 function isWithinDistance(cframenew, cframeold, distance)
   return math.abs(cframenew - cframeold) < distance
@@ -44,44 +43,18 @@ local clonable2 = 1
 local clonable3 = 1
 local clonable4 = 1
 local clonable5 = 1
+local clonablenum = {clonable1, clonable2, clonable3, clonable4, clonable5}
 local CFrames = {CFrame1, CFrame2, CFrame3, CFrame4, CFrame5}
 Players.PlayerAdded:Connect(function(player)
-  local clonablenum = {clonable1, clonable2, clonable3, clonable4, clonable5}
   local point = CFrames[pointpoint]
   local ran = math.random(1, 5)
-  if ran == 1 then
-    clonable = clonablenum[1]
-  elseif ran == 2 then
-    clonable = clonablenum[2]
-  elseif ran == 3 then
-    clonable = clonablenum[3]
-  elseif ran == 4 then
-    clonable = clonablenum[4]
-  elseif ran == 5 then
-    clonable = clonablenum[5]
-  end
-  name = 'island' .. ran .. cloneable
   function islandMake()
     return game.ReplicatedStorage["island" .. ran]
   end
   local cloneobj = islandMake():Clone()
   cloneobj.Parent = game.Workspace
-  cloneobj.Name = name
+  cloneobj.Name = 'island' .. ran .. clonablenum[ran]
   cloneobj:SetPrimaryPartCFrame(point) 
-  if ran == 1 then
-    clonable1 += 1
-  end
-  elseif ran == 2 then
-    clonable2 += 1
-  end
-  elseif ran == 3 then
-    clonable3 += 1
-  end
-  elseif ran == 4 then
-    clonable4 += 1
-  end
-  elseif ran == 5 then
-    clonable5 += 1
-  end
+  clonablenum[ran] += 1
   pointpoint += 1
 end)
