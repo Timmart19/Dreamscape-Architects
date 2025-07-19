@@ -1,5 +1,8 @@
 local UserInputService = game:GetService("UserInputService")
 local player = game:GetService("Players").LocalPlayer
+local character = player.Character
+local isPlacing = false
+local tool
 UserInputService.InputBegan:Connect(function(input)
 	local character = player.Character or player.CharacterAdded:Wait()
 	if not character then return end
@@ -7,7 +10,10 @@ UserInputService.InputBegan:Connect(function(input)
 	if not humanoidRootPart then return end
   if input.UserInputType == Enum.UserInputType.Keyboard then
     if input.KeyCode == Enum.KeyCode.R then
+			if isPlacing then return end
+			isPlacing = true
 			task.spawn(function()
+				local tool = character:FindFirstChildOfClass("Tool")
 				local part = Instance.new("Part")
 				part.Size = Vector3.new(2, 2, 2)
 				part.Anchored = true
@@ -22,13 +28,19 @@ UserInputService.InputBegan:Connect(function(input)
 					part.Position = spawnPosition
       	end
 				part:Destroy()
-				local finalpart = Instance.new("Part")
-				finalpart.Material = Enum.Material.Wood
-				finalpart.Anchored = true
-				finalpart.Position = spawnPosition
-				finalpart.Size = Vector3.new(2, 2, 2)
-				finalpart.BrickColor = BrickColor.new("Light Brown")
-				finalpart.Parent = workspace
+				if tool then
+					if tool.Name == "Wood" then
+						part:Destroy()
+						local finalpart = Instance.new("Part")
+						finalpart.Material = Enum.Material.Wood
+						finalpart.Anchored = true
+						finalpart.Position = spawnPosition
+						finalpart.Size = Vector3.new(2, 2, 2)
+						finalpart.BrickColor = BrickColor.new("Light Brown")
+						finalpart.Parent = workspace
+					end
+				end
+				isPlacing = false
 			end)
 		end
 	end
