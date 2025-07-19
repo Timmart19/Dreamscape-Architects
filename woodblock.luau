@@ -1,8 +1,10 @@
 local UserInputService = game:GetService("UserInputService")
 local player = game:GetService("Players").LocalPlayer
-local character = player.Character
+local toolTypes = {
+	["Wood"] = { Material = Enum.Material.Wood, Color = BrickColor.new("Light Brown") },
+	["Stone"] = { Material = Enum.Material.Slate, Color = BrickColor.new("Dark stone grey") },
+}
 local isPlacing = false
-local tool
 UserInputService.InputBegan:Connect(function(input)
 	local character = player.Character or player.CharacterAdded:Wait()
 	if not character then return end
@@ -28,16 +30,20 @@ UserInputService.InputBegan:Connect(function(input)
 					part.Position = spawnPosition
       	end
 				part:Destroy()
-				if tool then
-					if tool.Name == "Wood" then
-						part:Destroy()
-						local finalpart = Instance.new("Part")
-						finalpart.Material = Enum.Material.Wood
-						finalpart.Anchored = true
-						finalpart.Position = spawnPosition
-						finalpart.Size = Vector3.new(2, 2, 2)
-						finalpart.BrickColor = BrickColor.new("Light Brown")
-						finalpart.Parent = workspace
+				if spawnPosition then
+					if tool then
+						if tool.Name == "Wood" then
+							local finalpart = Instance.new("Part")
+							local settings = toolTypes[tool.Name]
+							if settings then
+								finalpart.Material = settings.Material
+								finalpart.BrickColor = settings.Color
+								finalpart.Parent = workspace
+								finalpart.Anchored = true
+								finalpart.Position = spawnPosition
+								finalpart.Size = Vector3.new(2, 2, 2)
+							end
+						end	
 					end
 				end
 				isPlacing = false
