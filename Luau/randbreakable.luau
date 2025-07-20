@@ -15,3 +15,23 @@ game.workspace.islands.ChildAdded:Connect(function(child))
     cloneRock.Parent = child
   end
 end)
+
+
+local possibleTreeCoords = script.Parent.Places.Trees
+local possibleRockCoords = script.Parent.Places.Rocks
+script.Parent.AncestryChanged:Connect(function()
+	for i in 1, math.random(3, 5) do
+		local cloneTree = game.Workspace.Tree:Clone()
+		cloneTree.PrimaryPart = cloneTree.Prime
+		local randTree = math.random(1, 10)
+		cloneTree:PivotTo(possibleTreeCoords[randTree].Position)
+		cloneTree.Parent = child
+	end
+	for i in 1, math.random(1, 3) do
+		local cloneRock = game.Workspace.Rock:Clone()
+		cloneRock.PrimaryPart = cloneRock.Prime
+		local randRock = math.random(1, 10)
+		cloneRock:PivotTo(possibleRockCoords[randRock].Position)
+		cloneRock.Parent = script.Parent
+	end
+end)
